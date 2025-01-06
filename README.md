@@ -1,19 +1,21 @@
-# Corelex Protocol SDK
+# CoreLex Protocol SDK
 
-TypeScript/JavaScript SDK for interacting with the Corelex Protocol API.
+TypeScript/JavaScript SDK for interacting with the CoreLex Protocol API.
 
 ## Installation
 
 ```bash
-yarn add @corelex/protocol-sdk
+yarn add @CoreLex/protocol-sdk
+```
 
-## Installation
+## Usage
 
-import { CorelexClient } from "@corelex-ai/protocol-sdk";
+```typescript
+import { CoreLexClient } from "@CoreLex-ai/protocol-sdk";
 
 // Initialize the client
-const client = new CorelexClient({
-  baseUrl: "https://api.corelex.xyz",
+const client = new CoreLexClient({
+  baseUrl: "https://api.CoreLex.xyz",
   privateKey: "0x...", // Your wallet private key
 });
 
@@ -49,22 +51,42 @@ const useAgent = async (agentId: string) => {
     return;
   }
 
-API Reference
-Agents
-createAgent(agent: CreateAgentT): Create a new agent
-getAgent(agentId: string): Get agent details
-updateAgent(agentId: string, update: Partial<CreateAgentT>): Update agent
-deleteAgent(agentId: string): Delete agent
-listMyAgents(params?: PaginationParams): List your agents
-generateAgentConfig(specification: string): Generate agent configuration
-inferAgent(agentId: string, input: string, threadId: string): Use agent inference
-Services
-createService(service: CreateServiceT): Create a new service
-getService(serviceId: string): Get service details
-updateService(serviceId: string, update: Partial<CreateServiceT>): Update service
-searchServices(params?: ServiceSearchParams): Search available services
-authorizeService(serviceId: string, authorization: Authorization): Authorize service usage
   console.log("Agent response:", response.data.result);
   console.log("Usage metrics:", response.data.usage);
   console.log("Metadata:", response.data.metadata);
 };
+```
+
+## API Reference
+
+### Agents
+
+- `createAgent(agent: CreateAgentT)`: Create a new agent
+- `getAgent(agentId: string)`: Get agent details
+- `updateAgent(agentId: string, update: Partial<CreateAgentT>)`: Update agent
+- `deleteAgent(agentId: string)`: Delete agent
+- `listMyAgents(params?: PaginationParams)`: List your agents
+- `generateAgentConfig(specification: string)`: Generate agent configuration
+- `inferAgent(agentId: string, input: string, threadId: string)`: Use agent inference
+
+### Services
+
+- `createService(service: CreateServiceT)`: Create a new service
+- `getService(serviceId: string)`: Get service details
+- `updateService(serviceId: string, update: Partial<CreateServiceT>)`: Update service
+- `searchServices(params?: ServiceSearchParams)`: Search available services
+- `authorizeService(serviceId: string, authorization: Authorization)`: Authorize service usage
+
+## Error Handling
+
+All methods return an `APIResponse<T>` type which includes either a `data` or an `error` property:
+
+```typescript
+interface APIResponse<T> {
+  data?: T;
+  error?: {
+    error: string;
+    details?: unknown;
+  };
+}
+```
